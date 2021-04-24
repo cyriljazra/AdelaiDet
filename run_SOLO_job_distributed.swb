@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#SBATCH --job-name="cgraber2_detectron2_resume"
+#SBATCH --output="logs/detectron2_resume.%j.%N.out"
+#SBATCH --error="logs/detectron2_resume.%j.%N.err"
+#SBATCH --partition=gpux8
+#SBATCH --cpu_per_gpu=16
+#SBATCH --time=24
+
+module purge
+module load cuda/10.2
+
+
+
+cd /home/cyriljazra/AdelaiDet
+
+MASTER=`/bin/hostname -s`
+OTHERS=`scontrol show hostnames $SLURM_JOB_NODELIST | grep -v $MASTER`
+echo "MASTER: ${MASTER}"
+echo "OTHERS: ${OTHERS}"
+#Get a random unused port on this host(MASTER) between 2000 and 9999
+#First line gets list of unused ports
+#2nd line restricts between 2000 and 9999
+#3rd line gets single random port from the list
+#MPORT=`ss -tan | awk '{print $4}' | cut -d':' -f2 | \
+#        grep "[2-9][0-9]\{3,3\}" | grep -v "[0-9]\{5,5\}" | \
+#        sort | uniq | shuf`
+MPORT=12233
+HOSTLIST="$MASTER $OTHERS"
+RANK=0
+DIST_URL="tcp://${MASTER}:${MPORT}"
+for node in $HOSTLIST; do
+        ssh -q $node \
+                "cd /home/cyriljazra/AdelaiDet && ./train_SOLO_model_distributed.sh $RANK $DIST_URL" &
+        RANK=$((RANK+1))
+done
+wait
+
+
