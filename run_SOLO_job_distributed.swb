@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name="cgraber2_detectron2_resume"
-#SBATCH --output="logs/detectron2_resume.%j.%N.out"
-#SBATCH --error="logs/detectron2_resume.%j.%N.err"
+#SBATCH --job-name="cyriljazra_SOLOv2"
+#SBATCH --output="/home/cyriljazra/AdelaiDet/logs/SOLOv2.%j.%N.out"
+#SBATCH --error="/home/cyriljazra/AdelaiDet/logs/SOLOv2.%j.%N.err"
 #SBATCH --partition=gpux8
 #SBATCH --cpu_per_gpu=16
 #SBATCH --time=24
