@@ -93,8 +93,8 @@ class DatasetMapperWithBasis(DatasetMapper):
             dict: a format that builtin models in detectron2 accept
         """
         dataset_dict = copy.deepcopy(dataset_dict)  # it will be modified by code below
-        print("BELOW IS THE dataset_dict (FOR DEBUGGING)")
-        print(dataset_dict)
+        #print("BELOW IS THE dataset_dict (FOR DEBUGGING)")
+        #print(dataset_dict)
         # USER: Write your own image loading if it's not from a file
         try:
             image = utils.read_image(
