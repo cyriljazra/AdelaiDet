@@ -26,6 +26,7 @@ from detectron2.data import MetadataCatalog, build_detection_train_loader
 from detectron2.engine import DefaultTrainer, default_argument_parser, default_setup, hooks, launch
 from detectron2.utils.events import EventStorage
 from detectron2.evaluation import (
+    CityscapesInstanceEvaluator,
     COCOEvaluator,
     COCOPanopticEvaluator,
     DatasetEvaluators,
@@ -126,6 +127,8 @@ class Trainer(DefaultTrainer):
                     output_dir=output_folder,
                 )
             )
+        if evaluator_type == "cityscapes_instance":
+            evaluator_list.append(CityscapesInstanceEvaluator(dataset_name))
         if evaluator_type in ["coco", "coco_panoptic_seg"]:
             evaluator_list.append(COCOEvaluator(dataset_name, cfg, True, output_folder))
         if evaluator_type == "coco_panoptic_seg":
