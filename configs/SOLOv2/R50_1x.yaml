@@ -1,6 +1,6 @@
 _BASE_: "SOLOv2_cityscapes.yaml"
 MODEL:
-  WEIGHTS: "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"
+  WEIGHTS: "https://cloudstor.aarnet.edu.au/plus/s/chF3VKQT4RDoEqC/download"
   RESNETS:
     DEPTH: 50
 SOLVER:
